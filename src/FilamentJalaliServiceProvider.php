@@ -63,6 +63,8 @@ class FilamentJalaliServiceProvider extends PackageServiceProvider
         });
 
         TextEntry::macro('jalaliDate', function (string|Closure|null $format = null, ?string $timezone = null) {
+            $format ??= fn (TextEntry $component): string => $component->getContainer()->getDefaultDateDisplayFormat();
+
             $this->formatStateUsing(static function (TextEntry $component, $state) use ($format, $timezone): ?string {
                 if (blank($state)) {
                     return null;
@@ -83,6 +85,8 @@ class FilamentJalaliServiceProvider extends PackageServiceProvider
         });
 
         TextEntry::macro('jalaliDateTime', function (string|Closure|null $format = null, ?string $timezone = null) {
+            $format ??= fn (TextEntry $component): string => $component->getContainer()->getDefaultDateTimeDisplayFormat();
+
             $this->jalaliDate($format, $timezone);
 
             return $this;
